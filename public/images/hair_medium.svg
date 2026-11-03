@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <rect width="200" height="200" rx="24" fill="#ECFEFF"/>
+  <!-- Hair back -->
+  <path d="M50 148 C46 95 65 42 100 42 C135 42 154 95 150 148 C144 154 134 148 132 138 C130 92 124 74 100 74 C76 74 70 92 68 138 C66 148 56 154 50 148 Z" fill="#0284C7"/>
+  <circle cx="100" cy="98" r="40" fill="#FED7AA"/>
+  <!-- Hair bangs -->
+  <path d="M60 90 C62 65 78 48 100 48 C122 48 138 65 140 90 C132 76 118 70 100 70 C82 70 68 76 60 90 Z" fill="#0284C7"/>
+  <circle cx="86" cy="100" r="3" fill="#1E293B"/>
+  <circle cx="114" cy="100" r="3" fill="#1E293B"/>
+  <path d="M94 114 Q100 120 106 114" stroke="#C2410C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

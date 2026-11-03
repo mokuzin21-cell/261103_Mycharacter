@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <filter id="waterRough" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="24" fill="#FAF5FF"/>
+  <!-- Painterly watercolor wash blobs -->
+  <path d="M55 70 C45 100 65 140 100 145 C135 150 155 110 145 75 C135 45 105 40 75 55 Z" fill="#E9D5FF" opacity="0.6" filter="url(#waterRough)"/>
+  <path d="M70 65 C60 85 75 115 100 120 C125 125 140 95 130 70 C120 50 100 45 80 55 Z" fill="#C084FC" opacity="0.5" filter="url(#waterRough)"/>
+  <circle cx="100" cy="95" r="32" fill="#FED7AA" opacity="0.85"/>
+  <!-- Soft eyes and delicate lines -->
+  <circle cx="90" cy="92" r="3" fill="#6B21A8"/>
+  <circle cx="110" cy="92" r="3" fill="#6B21A8"/>
+  <path d="M96 102 Q100 106 104 102" stroke="#7E22CE" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Paint splatters -->
+  <circle cx="50" cy="50" r="4" fill="#C084FC" opacity="0.4"/>
+  <circle cx="155" cy="130" r="5" fill="#A855F7" opacity="0.4"/>
+  <circle cx="140" cy="45" r="3" fill="#E9D5FF" opacity="0.7"/>
+  <text x="100" y="185" font-family="sans-serif" font-size="11" font-weight="bold" fill="#7E22CE" text-anchor="middle">WATERCOLOR</text>
+</svg>

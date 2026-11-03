@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <rect width="200" height="200" rx="24" fill="#0F172A"/>
+  <!-- Pixel grid background -->
+  <g fill="#1E293B">
+    <rect x="20" y="20" width="16" height="16"/>
+    <rect x="52" y="20" width="16" height="16"/>
+    <rect x="132" y="20" width="16" height="16"/>
+    <rect x="164" y="20" width="16" height="16"/>
+  </g>
+  <!-- Pixel face 8-bit blocks -->
+  <g shape-rendering="crispEdges">
+    <!-- Hair -->
+    <rect x="76" y="44" width="48" height="16" fill="#10B981"/>
+    <rect x="68" y="60" width="64" height="16" fill="#10B981"/>
+    <rect x="68" y="76" width="16" height="32" fill="#10B981"/>
+    <rect x="116" y="76" width="16" height="32" fill="#10B981"/>
+    <!-- Face skin -->
+    <rect x="84" y="76" width="32" height="40" fill="#FED7AA"/>
+    <!-- Eyes -->
+    <rect x="84" y="92" width="8" height="8" fill="#0F172A"/>
+    <rect x="108" y="92" width="8" height="8" fill="#0F172A"/>
+    <!-- Mouth -->
+    <rect x="96" y="108" width="8" height="4" fill="#E11D48"/>
+    <!-- Body -->
+    <rect x="80" y="124" width="40" height="24" fill="#3B82F6"/>
+  </g>
+  <text x="100" y="185" font-family="monospace" font-size="11" font-weight="bold" fill="#34D399" text-anchor="middle">PIXEL ART</text>
+</svg>

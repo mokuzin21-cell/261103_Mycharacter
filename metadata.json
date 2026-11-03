@@ -1,0 +1,6 @@
+{
+  "name": "나만의 AI 캐릭터 만들기",
+  "description": "누구나 쉽게 자신을 닮은 AI 캐릭터 이미지 생성용 프롬프트를 자동으로 만들어주는 반응형 웹앱",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

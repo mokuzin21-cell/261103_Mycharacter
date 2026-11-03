@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <rect width="200" height="200" rx="24" fill="#FFF1F2"/>
+  <!-- Hair flowing long -->
+  <path d="M46 175 C42 100 60 38 100 38 C140 38 158 100 154 175 C146 182 136 172 134 150 C130 90 124 68 100 68 C76 68 70 90 66 150 C64 172 54 182 46 175 Z" fill="#E11D48"/>
+  <circle cx="100" cy="94" r="38" fill="#FED7AA"/>
+  <!-- Bangs & front locks -->
+  <path d="M62 85 C65 62 80 46 100 46 C120 46 135 62 138 85 C130 72 118 66 100 66 C82 66 70 72 62 85 Z" fill="#BE123C"/>
+  <circle cx="87" cy="95" r="3" fill="#1E293B"/>
+  <circle cx="113" cy="95" r="3" fill="#1E293B"/>
+  <path d="M94 110 Q100 115 106 110" stroke="#9F1239" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <rect width="200" height="200" rx="24" fill="#FDF2F8"/>
+  <circle cx="100" cy="100" r="60" fill="#FCE7F3" opacity="0.6"/>
+  <!-- Anime face -->
+  <path d="M68 85 C66 60 80 48 100 48 C120 48 134 60 132 85 C132 105 118 126 100 132 C82 126 68 105 68 85 Z" fill="#FFE4E6"/>
+  <!-- Anime styled spiky bangs -->
+  <polygon points="62,75 75,98 84,80 94,102 104,78 116,102 124,80 136,92 138,70 100,38" fill="#EC4899"/>
+  <!-- Expressive anime eyes -->
+  <ellipse cx="84" cy="94" rx="7" ry="10" fill="#BE185D"/>
+  <ellipse cx="84" cy="96" rx="5" ry="7" fill="#831843"/>
+  <circle cx="86" cy="90" r="3" fill="#FFFFFF"/>
+  <circle cx="82" cy="98" r="1.5" fill="#FFFFFF"/>
+  <ellipse cx="116" cy="94" rx="7" ry="10" fill="#BE185D"/>
+  <ellipse cx="116" cy="96" rx="5" ry="7" fill="#831843"/>
+  <circle cx="118" cy="90" r="3" fill="#FFFFFF"/>
+  <circle cx="114" cy="98" r="1.5" fill="#FFFFFF"/>
+  <!-- Anime mouth -->
+  <path d="M96 114 Q100 117 104 114" stroke="#BE185D" stroke-width="2" fill="none"/>
+  <text x="100" y="185" font-family="sans-serif" font-size="11" font-weight="bold" fill="#BE185D" text-anchor="middle">ANIME</text>
+</svg>

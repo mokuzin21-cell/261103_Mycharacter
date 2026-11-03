@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <rect width="200" height="200" rx="24" fill="#FAFAFA"/>
+  <!-- Minimalist clean line art -->
+  <circle cx="100" cy="100" r="62" fill="none" stroke="#E5E5E5" stroke-width="2"/>
+  <!-- Head outline -->
+  <path d="M80 80 C80 60 90 52 100 52 C110 52 120 60 120 80 C120 102 112 118 100 122 C88 118 80 102 80 80 Z" fill="none" stroke="#18181B" stroke-width="3" stroke-linecap="round"/>
+  <!-- Hair line -->
+  <path d="M76 82 C72 60 85 45 102 45 C122 45 128 62 126 80" fill="none" stroke="#18181B" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Eyes and glasses lines -->
+  <circle cx="92" cy="85" r="7" fill="none" stroke="#18181B" stroke-width="2.5"/>
+  <circle cx="108" cy="85" r="7" fill="none" stroke="#18181B" stroke-width="2.5"/>
+  <line x1="99" y1="85" x2="101" y2="85" stroke="#18181B" stroke-width="2.5"/>
+  <!-- Smile -->
+  <path d="M96 102 Q100 106 104 102" fill="none" stroke="#18181B" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Shoulders -->
+  <path d="M70 150 C75 132 88 126 100 126 C112 126 125 132 130 150" fill="none" stroke="#18181B" stroke-width="3" stroke-linecap="round"/>
+  <text x="100" y="185" font-family="sans-serif" font-size="11" font-weight="bold" fill="#3F3F46" text-anchor="middle">LINE ART</text>
+</svg>
