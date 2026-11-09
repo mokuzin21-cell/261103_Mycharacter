@@ -32,39 +32,36 @@
 
 ---
 
-## 🖼️ 이미지 카드 교체 방법
+## 🖼️ 이미지 카드 파일 안내
 
-현재는 고품질 벡터 SVG 임시 이미지가 적용되어 있으며, 준비하신 예시 이미지(PNG, JPG, WebP, SVG 등)로 손쉽게 교체하실 수 있습니다.
+새로 제작된 고해상도 캐릭터 일러스트가 `public/images/` 폴더에 PNG 포맷으로 완벽하게 연동되어 있습니다.
 
-### 1. 이미지 파일 넣기
-`public/images/` 폴더에 아래의 파일명으로 제작하신 이미지를 넣어주시면 됩니다.
+### 이미지 파일 목록
 
 | 구분 | 파일명 | 선택 항목 이름 |
 | :--- | :--- | :--- |
-| **Q3. 체형** | `body_slim.svg` | 마른 체형 |
-| | `body_average.svg` | 보통 체형 |
-| | `body_chubby.svg` | 통통한 체형 |
-| | `body_muscular.svg` | 근육형 |
-| **Q4. 머리 길이** | `hair_buzz.svg` | 스포츠형 짧은 머리 |
-| | `hair_short.svg` | 짧은 머리 |
-| | `hair_bob.svg` | 단발머리 |
-| | `hair_medium.svg` | 중간 길이 |
-| | `hair_long.svg` | 긴 머리 |
-| **Q5. 머리 모양** | `style_straight.svg` | 생머리 |
-| | `style_wavy.svg` | 웨이브 |
-| | `style_curly.svg` | 곱슬머리 |
-| | `style_tied.svg` | 묶은 머리 |
-| | `style_other.svg` | 기타 (직접 입력) |
-| **Q8. 그림 스타일** | `art_chibi.svg` | 치비 (SD 캐릭터) |
-| | `art_lineart.svg` | 라인아트 |
-| | `art_clay.svg` | 3D 클레이 |
-| | `art_anime.svg` | 애니메이션 |
-| | `art_pixel.svg` | 픽셀아트 |
-| | `art_flat_vector.svg` | 플랫 벡터 |
-| | `art_watercolor.svg` | 수채화 |
-| | `art_plush.svg` | 봉제인형 |
-
-> **팁:** `.png`나 `.jpg` 파일을 사용하고 싶으신 경우, `src/data/characterData.ts` 파일에서 해당 항목의 `image: 'images/body_slim.png'`와 같이 확장자명만 변경하시면 됩니다.
+| **Q3. 체형** | `body_slim.png` | 마른 체형 |
+| | `body_average.png` | 보통 체형 |
+| | `body_chubby.png` | 통통한 체형 |
+| | `body_muscular.png` | 근육형 |
+| **Q4. 머리 길이** | `hair_buzz.png` | 스포츠형 짧은 머리 |
+| | `hair_short.png` | 짧은 머리 |
+| | `hair_bob.png` | 단발머리 |
+| | `hair_medium.png` | 중간 길이 |
+| | `hair_long.png` | 긴 머리 |
+| **Q5. 머리 모양** | `style_straight.png` | 생머리 |
+| | `style_wavy.png` | 웨이브 |
+| | `style_curly.png` | 곱슬머리 |
+| | `style_tied.png` | 묶은 머리 |
+| | `style_other.svg` | 기타 (직접 입력 아이콘) |
+| **Q8. 그림 스타일** | `art_chibi.png` | 치비 (SD 캐릭터) |
+| | `art_lineart.png` | 라인아트 |
+| | `art_clay.png` | 3D 클레이 |
+| | `art_anime.png` | 애니메이션 |
+| | `art_pixel.png` | 픽셀아트 |
+| | `art_flat_vector.png` | 플랫 벡터 |
+| | `art_watercolor.png` | 수채화 |
+| | `art_plush.png` | 봉제인형 |
 
 ---
 

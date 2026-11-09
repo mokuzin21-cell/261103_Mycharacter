@@ -39,13 +39,13 @@ export const ImageCard: React.FC<ImageCardProps> = ({
       )}
 
       {/* Image / Illustration Container */}
-      <div className="w-full aspect-square max-h-36 sm:max-h-44 rounded-xl overflow-hidden bg-slate-100 flex items-center justify-center p-2 mb-3 transition-transform group-hover:scale-[1.02]">
+      <div className="w-full aspect-square max-h-40 sm:max-h-48 rounded-xl overflow-hidden bg-white/80 border border-slate-100 flex items-center justify-center p-1 sm:p-1.5 mb-3 transition-transform group-hover:scale-[1.02]">
         {!hasError && imageSrc ? (
           <img
             src={imageSrc}
             alt={option.name}
             onError={() => setHasError(true)}
-            className="w-full h-full object-contain pointer-events-none drop-shadow-sm select-none"
+            className="w-full h-full object-contain pointer-events-none select-none rounded-lg"
             loading="lazy"
           />
         ) : (
