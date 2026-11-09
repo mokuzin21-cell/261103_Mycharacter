@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Copy,
   Check,
@@ -8,6 +8,8 @@ import {
   AlertTriangle,
   Languages,
   CheckCircle2,
+  Pencil,
+  Undo2,
 } from 'lucide-react';
 import { PromptResult } from '../utils/promptGenerator';
 import { CharacterFormState } from '../data/characterData';
@@ -27,12 +29,58 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
   const [copied, setCopied] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
-  const currentText =
-    activeTab === 'korean'
-      ? promptResult.koreanPrompt
+  // Direct editing mode state
+  const [isCustomMode, setIsCustomMode] = useState(false);
+  const [customKorean, setCustomKorean] = useState('');
+  const [customEnglish, setCustomEnglish] = useState('');
+  const [customNegative, setCustomNegative] = useState('');
+
+  // When not in custom mode, keep custom drafts in sync with auto-generated prompts
+  useEffect(() => {
+    if (!isCustomMode) {
+      setCustomKorean(promptResult.koreanPrompt);
+      setCustomEnglish(promptResult.englishPrompt);
+      setCustomNegative(promptResult.negativePrompt);
+    }
+  }, [promptResult, isCustomMode]);
+
+  const handleToggleCustomMode = () => {
+    if (!isCustomMode) {
+      // Entering custom mode: ensure drafts have latest auto prompt
+      setCustomKorean(customKorean || promptResult.koreanPrompt);
+      setCustomEnglish(customEnglish || promptResult.englishPrompt);
+      setCustomNegative(customNegative || promptResult.negativePrompt);
+      setIsCustomMode(true);
+    } else {
+      // Toggle off / finish editing
+      setIsCustomMode(false);
+    }
+  };
+
+  const handleRevertToAuto = () => {
+    setCustomKorean(promptResult.koreanPrompt);
+    setCustomEnglish(promptResult.englishPrompt);
+    setCustomNegative(promptResult.negativePrompt);
+    setIsCustomMode(false);
+  };
+
+  const currentText = isCustomMode
+    ? activeTab === 'korean'
+      ? customKorean
       : activeTab === 'english'
-      ? promptResult.englishPrompt
-      : promptResult.negativePrompt;
+      ? customEnglish
+      : customNegative
+    : activeTab === 'korean'
+    ? promptResult.koreanPrompt
+    : activeTab === 'english'
+    ? promptResult.englishPrompt
+    : promptResult.negativePrompt;
+
+  const handleTextChange = (value: string) => {
+    if (activeTab === 'korean') setCustomKorean(value);
+    else if (activeTab === 'english') setCustomEnglish(value);
+    else setCustomNegative(value);
+  };
 
   const handleCopy = async () => {
     try {
@@ -53,15 +101,20 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
   };
 
   const handleDownload = () => {
+    const finalKorean = isCustomMode ? customKorean : promptResult.koreanPrompt;
+    const finalEnglish = isCustomMode ? customEnglish : promptResult.englishPrompt;
+    const finalNegative = isCustomMode ? customNegative : promptResult.negativePrompt;
+
     const content = `[나만의 AI 캐릭터 프롬프트]\n\n` +
-      `■ 한국어 프롬프트:\n${promptResult.koreanPrompt}\n\n` +
-      `■ 영문 프롬프트 (Midjourney / DALL-E / SD / Gemini):\n${promptResult.englishPrompt}\n\n` +
-      `■ 제외할 부정 프롬프트 (Negative Prompt):\n${promptResult.negativePrompt}\n\n` +
+      `■ 한국어 프롬프트:\n${finalKorean}\n\n` +
+      `■ 영문 프롬프트 (Midjourney / DALL-E / SD / Gemini):\n${finalEnglish}\n\n` +
+      `■ 제외할 부정 프롬프트 (Negative Prompt):\n${finalNegative}\n\n` +
       `■ 선택 요약:\n` +
       `- 성별: ${formState.gender} / 연령대: ${formState.age} / 체형: ${formState.bodyType}\n` +
       `- 헤어: ${formState.hairLength} ${formState.hairStyle} (${formState.hairColor})\n` +
       `- 안경: ${formState.glasses} / 그림 스타일: ${formState.artStyle}\n` +
       `- 배경: ${formState.background} / 사용 목적: ${formState.purpose}\n\n` +
+      `작성 방식: ${isCustomMode ? '사용자 직접 작성/수정' : '질문 답변 기반 자동 생성'}\n` +
       `생성일자: ${new Date().toLocaleDateString('ko-KR')}`;
 
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -73,6 +126,11 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const handleFullReset = () => {
+    setIsCustomMode(false);
+    onReset();
   };
 
   return (
@@ -104,7 +162,7 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  onReset();
+                  handleFullReset();
                   setShowResetConfirm(false);
                 }}
                 className="px-3 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-bold hover:bg-rose-700 transition-colors shadow-sm"
@@ -131,6 +189,34 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
             </button>
           )}
 
+          {/* 직접 작성하기 버튼 */}
+          <button
+            type="button"
+            onClick={handleToggleCustomMode}
+            className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-sm ${
+              isCustomMode
+                ? 'bg-teal-600 text-white border border-teal-600 hover:bg-teal-700 shadow-teal-600/20'
+                : 'bg-white border border-slate-200 text-slate-700 hover:text-teal-700 hover:border-teal-300 hover:bg-teal-50/50'
+            }`}
+            title={isCustomMode ? '직접 작성 모드 완료' : '프롬프트 직접 편집 및 작성하기'}
+          >
+            <Pencil className="w-4 h-4" />
+            <span>{isCustomMode ? '작성 완료' : '직접 작성하기'}</span>
+          </button>
+
+          {/* 직접 작성 모드일 때 자동 생성 복원 버튼 */}
+          {isCustomMode && (
+            <button
+              type="button"
+              onClick={handleRevertToAuto}
+              className="flex items-center gap-1.5 px-3 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold transition-colors cursor-pointer"
+              title="선택 항목 기반 자동 생성 프롬프트로 복원"
+            >
+              <Undo2 className="w-3.5 h-3.5" />
+              <span>자동 생성 복원</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={handleDownload}
@@ -144,7 +230,7 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
       </div>
 
       {/* Warnings & Suggestions if conflicts detected */}
-      {promptResult.warnings.length > 0 && (
+      {promptResult.warnings.length > 0 && !isCustomMode && (
         <div className="mt-5 space-y-2">
           {promptResult.warnings.map((warn, index) => (
             <div
@@ -182,6 +268,11 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
         <span className="px-2.5 py-1 rounded-lg bg-sky-100 text-sky-800 font-bold">
           용도: {formState.purpose}
         </span>
+        {isCustomMode && (
+          <span className="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 font-bold animate-pulse">
+            ✏️ 직접 작성 모드 ON
+          </span>
+        )}
       </div>
 
       {/* Language / Format Switcher Tabs */}
@@ -246,14 +337,61 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
         </button>
       </div>
 
-      {/* Prompt Box */}
-      <div className="mt-4 relative group">
-        <div className="w-full min-h-[140px] p-5 sm:p-6 rounded-2xl bg-white border border-teal-200/80 shadow-inner font-sans text-sm sm:text-base text-slate-800 leading-relaxed break-keep select-text">
-          {currentText}
+      {/* Direct Editing Mode Banner */}
+      {isCustomMode && (
+        <div className="mt-4 flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-teal-50 border border-teal-200/80 text-xs sm:text-sm text-teal-900 animate-in fade-in-50 duration-150">
+          <div className="flex items-center gap-2">
+            <Pencil className="w-4 h-4 text-teal-600 shrink-0" />
+            <span>
+              <strong>직접 작성 모드가 켜졌습니다:</strong> 프롬프트를 자유롭게 타이핑하여 수정하거나 추가해 보세요.
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={handleRevertToAuto}
+            className="text-xs font-bold text-teal-700 hover:underline shrink-0 flex items-center gap-1 cursor-pointer"
+          >
+            <Undo2 className="w-3.5 h-3.5" />
+            <span>자동 생성 원본으로 복원</span>
+          </button>
         </div>
+      )}
+
+      {/* Prompt Box: Textarea when in custom mode, View container when in auto mode */}
+      <div className="mt-3 relative group">
+        {isCustomMode ? (
+          <div>
+            <textarea
+              value={currentText}
+              onChange={(e) => handleTextChange(e.target.value)}
+              placeholder="원하는 프롬프트를 자유롭게 작성해 보세요..."
+              rows={6}
+              className="w-full p-5 sm:p-6 rounded-2xl bg-white border-2 border-teal-400 focus:border-teal-500 focus:ring-4 focus:ring-teal-100 shadow-inner font-sans text-sm sm:text-base text-slate-800 leading-relaxed outline-none resize-y transition-all"
+            />
+            <div className="flex items-center justify-between px-2 pt-1.5 text-xs text-slate-400">
+              <span className="flex items-center gap-1 text-teal-700 font-medium">
+                <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
+                직접 편집 중 (작성이 끝나면 상단의 '작성 완료' 버튼을 누르세요)
+              </span>
+              <span className="font-mono">{currentText.length}자</span>
+            </div>
+          </div>
+        ) : (
+          <div
+            onClick={handleToggleCustomMode}
+            title="클릭하여 직접 작성/수정 모드로 전환"
+            className="w-full min-h-[140px] p-5 sm:p-6 rounded-2xl bg-white border border-teal-200/80 hover:border-teal-400 hover:shadow-md shadow-inner font-sans text-sm sm:text-base text-slate-800 leading-relaxed break-keep select-text cursor-pointer transition-all relative group"
+          >
+            {currentText}
+            <div className="absolute bottom-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-teal-50 text-teal-700 border border-teal-200 px-2 py-0.5 rounded-lg text-xs font-semibold flex items-center gap-1 pointer-events-none">
+              <Pencil className="w-3 h-3" />
+              <span>클릭하여 직접 수정</span>
+            </div>
+          </div>
+        )}
 
         {copied && (
-          <div className="absolute inset-0 bg-white/90 backdrop-blur-xs rounded-2xl flex flex-col items-center justify-center text-teal-700 animate-in fade-in-50 duration-150">
+          <div className="absolute inset-0 bg-white/90 backdrop-blur-xs rounded-2xl flex flex-col items-center justify-center text-teal-700 animate-in fade-in-50 duration-150 z-10">
             <CheckCircle2 className="w-10 h-10 mb-1 text-teal-500 stroke-[2.5]" />
             <p className="text-base font-extrabold text-slate-900">클립보드에 복사되었습니다!</p>
             <p className="text-xs text-slate-500 mt-0.5">이미지 생성 AI (미드저니, DALL-E, 챗GPT 등)에 붙여넣어 보세요.</p>
