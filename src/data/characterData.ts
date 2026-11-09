@@ -26,6 +26,7 @@ export interface CharacterFormState {
   hairStyleCustom?: string;
   hairColor: string;
   glasses: string;
+  expression: string;
   artStyle: string;
   background: string;
   backgroundColorCustom?: string;
@@ -42,6 +43,7 @@ export const initialFormState: CharacterFormState = {
   hairStyleCustom: '',
   hairColor: '초코 브라운',
   glasses: '미착용',
+  expression: '밝은 미소',
   artStyle: '치비',
   background: '단색',
   backgroundColorCustom: '#A7F3D0', // soft pastel mint
@@ -146,8 +148,25 @@ export const QUESTIONS_DATA: QuestionData[] = [
     ],
   },
   {
-    id: 'artStyle',
+    id: 'expression',
     qNumber: 8,
+    title: '나의 캐릭터는 어떤 표정을 짓고 있나요?',
+    subtitle: '나의 평소 표정이나 캐릭터에 표현하고 싶은 기분을 선택해 보세요.',
+    type: 'image',
+    options: [
+      { id: '밝은 미소', name: '밝은 미소', image: 'images/expression_smile.png', description: '환하고 다정한 미소' },
+      { id: '신나는 표정', name: '신나는 표정', image: 'images/expression_excited.png', description: '눈웃음과 활기찬 웃음' },
+      { id: '차분한 표정', name: '차분한 표정', image: 'images/expression_calm.png', description: '편안하고 부드러운 인상' },
+      { id: '자신감 있는 표정', name: '자신감 있는 표정', image: 'images/expression_confident.png', description: '당당하고 매력적인 미소' },
+      { id: '생각하는 표정', name: '생각하는 표정', image: 'images/expression_thinking.png', description: '살짝 모은 눈썹과 고민' },
+      { id: '놀란 표정', name: '놀란 표정', image: 'images/expression_surprised.png', description: '크게 뜬 눈과 호기심' },
+      { id: '수줍은 표정', name: '수줍은 표정', image: 'images/expression_shy.png', description: '발그레 붉어진 수줍은 볼' },
+      { id: '화난 표정', name: '화난 표정', image: 'images/expression_angry.png', description: '다부지게 찌푸린 눈썹과 입' },
+    ],
+  },
+  {
+    id: 'artStyle',
+    qNumber: 9,
     title: '어떤 그림 스타일로 만들까요?',
     subtitle: '가장 마음에 드는 아트를 골라보세요. 분위기가 확 달라져요!',
     type: 'image',
@@ -164,7 +183,7 @@ export const QUESTIONS_DATA: QuestionData[] = [
   },
   {
     id: 'background',
-    qNumber: 9,
+    qNumber: 10,
     title: '배경은 어떻게 할까요?',
     subtitle: '단색을 선택하시면 원하는 파스텔 배경색을 직접 고를 수 있어요.',
     type: 'text',
@@ -179,7 +198,7 @@ export const QUESTIONS_DATA: QuestionData[] = [
   },
   {
     id: 'purpose',
-    qNumber: 10,
+    qNumber: 11,
     title: '캐릭터를 어디에 사용할 건가요?',
     subtitle: '사용 목적에 맞춰 프롬프트의 구도와 비율이 자동으로 최적화됩니다.',
     type: 'icon',
@@ -199,7 +218,7 @@ export const PRESET_CHARACTERS = [
   {
     id: 'preset_kid',
     name: '귀여운 초등학생 프로필',
-    desc: '치비 스타일 / 초코 브라운 단발머리 / 민트 배경',
+    desc: '치비 스타일 / 밝은 미소 / 초코 브라운 단발',
     icon: '🎒',
     state: {
       gender: '여성',
@@ -210,6 +229,7 @@ export const PRESET_CHARACTERS = [
       hairStyleCustom: '',
       hairColor: '초코 브라운',
       glasses: '착용',
+      expression: '밝은 미소',
       artStyle: '치비',
       background: '단색',
       backgroundColorCustom: '#A7F3D0',
@@ -220,7 +240,7 @@ export const PRESET_CHARACTERS = [
   {
     id: 'preset_teen',
     name: '발랄한 대학생 스티커',
-    desc: '애니메이션 화풍 / 긴 웨이브 밀크브라운 / 투명 배경',
+    desc: '애니메이션 화풍 / 신나는 표정 / 긴 웨이브',
     icon: '🎨',
     state: {
       gender: '여성',
@@ -231,6 +251,7 @@ export const PRESET_CHARACTERS = [
       hairStyleCustom: '',
       hairColor: '밀크 브라운',
       glasses: '미착용',
+      expression: '신나는 표정',
       artStyle: '애니메이션',
       background: '투명',
       backgroundColorCustom: '#BAE6FD',
@@ -241,7 +262,7 @@ export const PRESET_CHARACTERS = [
   {
     id: 'preset_office',
     name: '따뜻한 직장인 3D 클레이',
-    desc: '3D 클레이 / 짧은 머리 숏컷 / 실내 카페 배경',
+    desc: '3D 클레이 / 차분한 표정 / 짧은 머리 숏컷',
     icon: '☕',
     state: {
       gender: '남성',
@@ -252,6 +273,7 @@ export const PRESET_CHARACTERS = [
       hairStyleCustom: '',
       hairColor: '다크 브라운',
       glasses: '착용',
+      expression: '차분한 표정',
       artStyle: '3D 클레이',
       background: '실내 배경',
       backgroundColorCustom: '#FED7AA',
@@ -262,7 +284,7 @@ export const PRESET_CHARACTERS = [
   {
     id: 'preset_plush',
     name: '포근한 봉제인형 키링',
-    desc: '봉제인형 / 묶은 머리 / 아크릴 키링 컷아웃',
+    desc: '봉제인형 / 수줍은 표정 / 아크릴 키링',
     icon: '🧸',
     state: {
       gender: '여성',
@@ -273,6 +295,7 @@ export const PRESET_CHARACTERS = [
       hairStyleCustom: '',
       hairColor: '검정',
       glasses: '미착용',
+      expression: '수줍은 표정',
       artStyle: '봉제인형',
       background: '투명',
       backgroundColorCustom: '#DDD6FE',

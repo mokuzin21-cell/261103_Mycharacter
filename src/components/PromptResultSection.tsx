@@ -112,8 +112,8 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
       `■ 선택 요약:\n` +
       `- 성별: ${formState.gender} / 연령대: ${formState.age} / 체형: ${formState.bodyType}\n` +
       `- 헤어: ${formState.hairLength} ${formState.hairStyle} (${formState.hairColor})\n` +
-      `- 안경: ${formState.glasses} / 그림 스타일: ${formState.artStyle}\n` +
-      `- 배경: ${formState.background} / 사용 목적: ${formState.purpose}\n\n` +
+      `- 안경: ${formState.glasses} / 표정: ${formState.expression}\n` +
+      `- 그림 스타일: ${formState.artStyle} / 배경: ${formState.background} / 사용 목적: ${formState.purpose}\n\n` +
       `작성 방식: ${isCustomMode ? '사용자 직접 작성/수정' : '질문 답변 기반 자동 생성'}\n` +
       `생성일자: ${new Date().toLocaleDateString('ko-KR')}`;
 
@@ -149,7 +149,7 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
               완성된 캐릭터 프롬프트
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              10가지 선택 항목이 반영되어 실시간으로 자동 작성되었습니다.
+              11가지 선택 항목이 반영되어 실시간으로 자동 작성되었습니다.
             </p>
           </div>
         </div>
@@ -261,6 +261,9 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
         </span>
         <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-medium">
           안경 {formState.glasses}
+        </span>
+        <span className="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold">
+          표정: {formState.expression}
         </span>
         <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-medium">
           {formState.background}

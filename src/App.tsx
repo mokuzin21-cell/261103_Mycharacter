@@ -56,7 +56,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse" />
             <span className="text-xs sm:text-sm font-bold text-slate-700">
-              10개 질문을 자유롭게 선택해 보세요
+              11개 질문을 자유롭게 선택해 보세요
             </span>
           </div>
           <button
@@ -69,7 +69,7 @@ export default function App() {
           </button>
         </div>
 
-        {/* 10 Questions Form */}
+        {/* 11 Questions Form */}
         <div className="space-y-6 sm:space-y-8">
           {QUESTIONS_DATA.map((question) => (
             <QuestionSection

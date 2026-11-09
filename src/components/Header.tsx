@@ -32,6 +32,9 @@ export const Header: React.FC<HeaderProps> = ({ onApplyPreset, onScrollToResult 
             <a href="#section-bodyType" className="hover:text-teal-600 transition-colors whitespace-nowrap shrink-0">
               체형/헤어
             </a>
+            <a href="#section-expression" className="hover:text-teal-600 transition-colors whitespace-nowrap shrink-0">
+              표정
+            </a>
             <a href="#section-artStyle" className="hover:text-teal-600 transition-colors whitespace-nowrap shrink-0">
               그림스타일
             </a>
@@ -64,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({ onApplyPreset, onScrollToResult 
           나를 쏙 닮은 <span className="text-teal-600">AI 캐릭터 프롬프트</span> 생성기
         </h1>
         <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
-          10가지 질문에 가볍게 답해보세요. 미드저니, DALL-E, 챗GPT 등 이미지 생성 AI에
+          11가지 질문에 가볍게 답해보세요. 미드저니, DALL-E, 챗GPT 등 이미지 생성 AI에
           바로 넣을 수 있는 고품질 프롬프트를 자동으로 만들어 드려요!
         </p>
 

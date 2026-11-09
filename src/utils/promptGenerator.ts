@@ -65,46 +65,88 @@ export function generateCharacterPrompt(state: CharacterFormState): PromptResult
       styleDescEn = 'digital character illustration';
   }
 
-  // 3. Subject (Age + Gender)
+  // 3. Subject (Age + Gender) - Neutral without fixed mood to prevent conflict with expression
   let ageGenderKr = '';
   let ageGenderEn = '';
   const isFemale = state.gender === '여성';
 
   switch (state.age) {
     case '어린이':
-      ageGenderKr = isFemale ? '천진난만하고 귀여운 어린이 소녀' : '천진난만하고 귀여운 어린이 소년';
-      ageGenderEn = isFemale ? 'cute cheerful young girl (7-10 years old)' : 'cute cheerful young boy (7-10 years old)';
+      ageGenderKr = isFemale ? '어린이 소녀' : '어린이 소년';
+      ageGenderEn = isFemale ? 'young girl (7-10 years old)' : 'young boy (7-10 years old)';
       break;
     case '청소년':
-      ageGenderKr = isFemale ? '청량하고 발랄한 10대 청소년 소녀' : '청량하고 발랄한 10대 청소년 소년';
-      ageGenderEn = isFemale ? 'charming teenage girl' : 'charming teenage boy';
+      ageGenderKr = isFemale ? '10대 청소년 여성' : '10대 청소년 남성';
+      ageGenderEn = isFemale ? 'teenage girl' : 'teenage boy';
       break;
     case '20대':
-      ageGenderKr = isFemale ? '생기발랄하고 트렌디한 20대 여성' : '생기발랄하고 트렌디한 20대 남성';
-      ageGenderEn = isFemale ? 'trendy attractive 20s young woman' : 'trendy handsome 20s young man';
+      ageGenderKr = isFemale ? '20대 여성' : '20대 남성';
+      ageGenderEn = isFemale ? '20s young woman' : '20s young man';
       break;
     case '30대':
-      ageGenderKr = isFemale ? '세련되고 성숙한 분위기의 30대 여성' : '단정하고 듬직한 30대 남성';
-      ageGenderEn = isFemale ? 'stylish refined 30s woman' : 'sharp dependable 30s man';
+      ageGenderKr = isFemale ? '30대 여성' : '30대 남성';
+      ageGenderEn = isFemale ? '30s woman' : '30s man';
       break;
     case '40대':
-      ageGenderKr = isFemale ? '단아하고 신뢰감 넘치는 40대 여성' : '신뢰감 있고 온화한 40대 남성';
-      ageGenderEn = isFemale ? 'graceful friendly 40s woman' : 'respectable warm 40s man';
+      ageGenderKr = isFemale ? '40대 여성' : '40대 남성';
+      ageGenderEn = isFemale ? '40s woman' : '40s man';
       break;
     case '50대':
-      ageGenderKr = isFemale ? '따뜻하고 우아한 인상의 50대 여성' : '온화하고 여유로운 인상의 50대 남성';
-      ageGenderEn = isFemale ? 'warm elegant 50s woman' : 'distinguished gentle 50s man';
+      ageGenderKr = isFemale ? '50대 여성' : '50대 남성';
+      ageGenderEn = isFemale ? '50s woman' : '50s man';
       break;
     case '60대 이상':
-      ageGenderKr = isFemale ? '포근하고 온화한 미소를 지닌 할머니' : '포근하고 지혜로운 인상의 할아버지';
-      ageGenderEn = isFemale ? 'kind-hearted gentle grandmother' : 'kind-hearted wise grandfather';
+      ageGenderKr = isFemale ? '60대 이상 여성 어르신' : '60대 이상 남성 어르신';
+      ageGenderEn = isFemale ? 'senior elderly woman' : 'senior elderly man';
       break;
     default:
       ageGenderKr = `${state.age} ${state.gender}`;
       ageGenderEn = `${state.gender === '여성' ? 'female' : 'male'} character`;
   }
 
-  // 4. Body Type
+  // 4. Expression (Q8) - Exact detailed wording as requested
+  let expressionDescKr = '';
+  let expressionDescEn = '';
+  switch (state.expression) {
+    case '밝은 미소':
+      expressionDescKr = '눈을 자연스럽게 뜨고 입꼬리를 올린 환한 미소';
+      expressionDescEn = 'bright radiant smile with naturally open eyes and gently upturned lips';
+      break;
+    case '신나는 표정':
+      expressionDescKr = '눈이 즐겁게 휘어지고 입을 크게 벌린 웃음';
+      expressionDescEn = 'joyful excited expression with happily crinkled smiling eyes and wide open laughing mouth';
+      break;
+    case '차분한 표정':
+      expressionDescKr = '편안한 눈매와 부드럽게 다문 입';
+      expressionDescEn = 'calm peaceful expression with relaxed gentle eyes and softly closed lips';
+      break;
+    case '자신감 있는 표정':
+      expressionDescKr = '당당한 눈빛과 자신감 있는 미소';
+      expressionDescEn = 'confident self-assured expression with bold radiant eyes and confident smile';
+      break;
+    case '생각하는 표정':
+      expressionDescKr = '살짝 모은 눈썹과 고민하는 눈빛';
+      expressionDescEn = 'thoughtful pensive expression with slightly furrowed eyebrows and contemplative pondering gaze';
+      break;
+    case '놀란 표정':
+      expressionDescKr = '크게 뜬 눈과 동그랗게 벌어진 입';
+      expressionDescEn = 'surprised startled expression with wide round open eyes and roundly agape mouth';
+      break;
+    case '수줍은 표정':
+      expressionDescKr = '붉어진 볼과 조심스러운 작은 미소';
+      expressionDescEn = 'shy bashful expression with blushing rosy cheeks and timid modest little smile';
+      break;
+    case '화난 표정':
+      expressionDescKr = '찌푸린 눈썹과 단단하게 다문 입';
+      expressionDescEn = 'angry determined expression with furrowed knitted eyebrows and firmly set mouth';
+      break;
+    default:
+      expressionDescKr = '자연스러운 표정';
+      expressionDescEn = 'natural expressive face';
+      break;
+  }
+
+  // 5. Body Type
   let bodyKr = '';
   let bodyEn = '';
   switch (state.bodyType) {
@@ -126,7 +168,7 @@ export function generateCharacterPrompt(state: CharacterFormState): PromptResult
       break;
   }
 
-  // 5. Hair (Length + Style + Color)
+  // 6. Hair (Length + Style + Color)
   let hairStyleName = state.hairStyle;
   let hairStyleEn = 'straight';
   if (state.hairStyle === '기타' && state.hairStyleCustom) {
@@ -158,12 +200,12 @@ export function generateCharacterPrompt(state: CharacterFormState): PromptResult
   const hairKr = `${state.hairColor} 색상의 ${state.hairLength} ${hairStyleName}`;
   const hairEn = `${hairLengthEn}, ${hairStyleEn}, ${hairColorEn} hair`;
 
-  // 6. Glasses
+  // 7. Glasses
   const hasGlasses = state.glasses === '착용';
-  const glassesKr = hasGlasses ? '트렌디한 둥근 안경을 착용하여 지적이면서도 다정한 느낌' : '안경을 쓰지 않은 또렷하고 맑은 눈망울';
-  const glassesEn = hasGlasses ? 'wearing stylish rounded glasses' : 'no glasses, bright clear eyes';
+  const glassesKr = hasGlasses ? '트렌디한 안경을 착용' : '안경을 쓰지 않은 깔끔한 얼굴';
+  const glassesEn = hasGlasses ? 'wearing stylish round glasses' : 'no glasses';
 
-  // 7. Background
+  // 8. Background
   let bgKr = '';
   let bgEn = '';
   if (state.background === '흰색') {
@@ -188,23 +230,23 @@ export function generateCharacterPrompt(state: CharacterFormState): PromptResult
     bgEn = 'cozy warm indoor room background with soft ambient lighting';
   }
 
-  // 8. Purpose & Framing
+  // 9. Purpose & Framing (Dynamic without fixed smile phrases)
   let purposeKr = '';
   let purposeEn = '';
   const customPurpose = state.purpose === '기타' ? (state.purposeCustom || '캐릭터') : state.purpose;
 
   switch (state.purpose) {
     case '프로필':
-      purposeKr = 'SNS 및 메신저 프로필 사진(Avatar)에 최적화된 상반신 중심 바스트 샷 구도로, 카메라를 향해 다정하게 아이컨택하며 미소 짓는 매력적인 인물 포즈';
-      purposeEn = 'centered bust shot framing for profile avatar, head and shoulders, looking at viewer with warm smile, front lighting';
+      purposeKr = 'SNS 및 메신저 프로필 사진(Avatar)에 최적화된 상반신 중심 바스트 샷 구도로, 카메라와 시선을 맞추며 캐릭터의 표정과 분위기가 돋보이는 인물 포즈';
+      purposeEn = 'centered bust shot framing for profile avatar, head and shoulders, looking at viewer, front lighting';
       break;
     case '스티커':
-      purposeKr = '다이어리와 메신저 스티커 제작에 적합하도록 테두리가 깔끔한 하얀색 외곽선(White Sticker Die-Cut Contour) 처리가 되어 있으며, 동작과 감정이 풍부한 포즈';
+      purposeKr = '다이어리와 메신저 스티커 제작에 적합하도록 테두리가 깔끔한 하얀색 외곽선(White Sticker Die-Cut Contour) 처리가 되어 있으며, 캐릭터의 감정 표현이 돋보이는 포즈';
       purposeEn = 'sticker design with thick clean white die-cut outline border, expressive pose, sticker sheet art, cute sticker aesthetic';
       break;
     case '이모티콘':
-      purposeKr = '모바일 채팅 이모티콘에 최적화되어 감정 표현이 뚜렷하고, 손동작과 사랑스러운 표정이 시선을 사로잡는 구도';
-      purposeEn = 'emoticon style, highly expressive emotional facial expression, communicative cute hand gesture, clear readable silhouette';
+      purposeKr = '모바일 채팅 이모티콘에 최적화되어 감정 표현이 뚜렷하고, 선택한 표정과 손동작이 시선을 사로잡는 구도';
+      purposeEn = 'emoticon style, highly readable emotional facial expression, communicative hand gesture, clear readable silhouette';
       break;
     case '키링':
       purposeKr = '아크릴 참(Keyring) 굿즈 형태의 매끄러운 컷아웃 실루엣, 상단에 작은 원형 키링 연결부 디테일과 반짝이는 아크릴 하이라이트가 가미된 형태';
@@ -225,10 +267,11 @@ export function generateCharacterPrompt(state: CharacterFormState): PromptResult
   const koreanPrompt = [
     `${styleDescKr}입니다.`,
     `주인공은 ${ageGenderKr}이며, ${bodyKr}을 지니고 있습니다.`,
+    `표정은 ${expressionDescKr}을 짓고 있습니다.`,
     `헤어스타일은 ${hairKr}을 하고 있으며, ${glassesKr}.`,
     `배경은 ${bgKr}으로 구성되어 캐릭터의 개성이 한눈에 돋보입니다.`,
     `${purposeKr}.`,
-    `전체적으로 선명한 디테일과 따뜻하고 친근한 색채감이 돋보이는 최고 품질의 일러스트 작품입니다.`,
+    `전체적으로 선명한 디테일과 완성도 높은 색채감이 돋보이는 최고 품질의 일러스트 작품입니다.`,
   ].join(' ');
 
   // English Combined Prompt (Optimized for Midjourney / DALL-E / Gemini)
@@ -236,6 +279,7 @@ export function generateCharacterPrompt(state: CharacterFormState): PromptResult
     `Masterpiece character illustration`,
     styleDescEn,
     ageGenderEn,
+    expressionDescEn,
     bodyEn,
     hairEn,
     glassesEn,
