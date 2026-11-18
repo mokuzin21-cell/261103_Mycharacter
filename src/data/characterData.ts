@@ -28,6 +28,7 @@ export interface CharacterFormState {
   glasses: string;
   expression: string;
   artStyle: string;
+  artStyleCustom?: string;
   background: string;
   backgroundColorCustom?: string;
   purpose: string;
@@ -45,6 +46,7 @@ export const initialFormState: CharacterFormState = {
   glasses: '미착용',
   expression: '밝은 미소',
   artStyle: '치비',
+  artStyleCustom: '',
   background: '단색',
   backgroundColorCustom: '#A7F3D0', // soft pastel mint
   purpose: '프로필',
@@ -173,7 +175,7 @@ export const QUESTIONS_DATA: QuestionData[] = [
     options: [
       { id: '치비', name: '치비 (SD)', image: 'images/art_chibi.png', description: '2등신 큰 머리 깜찍한 SD 캐릭터' },
       { id: '라인아트', name: '라인아트', image: 'images/art_lineart.png', description: '간결하고 깔끔한 감성 드로잉' },
-      { id: '3D 클레이', name: '3D 클레이', image: 'images/art_clay.png', description: '말랑말랑 귀여운 점토 인형 느낌' },
+      { id: '3D 애니메이션', name: '3D 애니메이션', image: 'images/art_clay.png', description: '영화 속 주인공처럼 생생한 입체 캐릭터' },
       { id: '애니메이션', name: '애니메이션', image: 'images/art_anime.png', description: '생동감 넘치는 만화 애니메이션 화풍' },
       { id: '픽셀아트', name: '픽셀아트', image: 'images/art_pixel.png', description: '레트로 감성의 8비트 도트 캐릭터' },
       { id: '플랫 벡터', name: '플랫 벡터', image: 'images/art_flat_vector.png', description: '선명한 색감의 모던 그래픽 일러스트' },
@@ -231,6 +233,7 @@ export const PRESET_CHARACTERS = [
       glasses: '착용',
       expression: '밝은 미소',
       artStyle: '치비',
+      artStyleCustom: '',
       background: '단색',
       backgroundColorCustom: '#A7F3D0',
       purpose: '프로필',
@@ -253,6 +256,7 @@ export const PRESET_CHARACTERS = [
       glasses: '미착용',
       expression: '신나는 표정',
       artStyle: '애니메이션',
+      artStyleCustom: '',
       background: '투명',
       backgroundColorCustom: '#BAE6FD',
       purpose: '스티커',
@@ -261,8 +265,8 @@ export const PRESET_CHARACTERS = [
   },
   {
     id: 'preset_office',
-    name: '따뜻한 직장인 3D 클레이',
-    desc: '3D 클레이 / 차분한 표정 / 짧은 머리 숏컷',
+    name: '따뜻한 직장인 3D 애니메이션',
+    desc: '3D 애니메이션 / 차분한 표정 / 짧은 머리 숏컷',
     icon: '☕',
     state: {
       gender: '남성',
@@ -274,7 +278,8 @@ export const PRESET_CHARACTERS = [
       hairColor: '다크 브라운',
       glasses: '착용',
       expression: '차분한 표정',
-      artStyle: '3D 클레이',
+      artStyle: '3D 애니메이션',
+      artStyleCustom: '',
       background: '실내 배경',
       backgroundColorCustom: '#FED7AA',
       purpose: '프로필',
@@ -297,6 +302,7 @@ export const PRESET_CHARACTERS = [
       glasses: '미착용',
       expression: '수줍은 표정',
       artStyle: '봉제인형',
+      artStyleCustom: '',
       background: '투명',
       backgroundColorCustom: '#DDD6FE',
       purpose: '키링',

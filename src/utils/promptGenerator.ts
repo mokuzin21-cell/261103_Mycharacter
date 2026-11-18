@@ -25,44 +25,52 @@ export function generateCharacterPrompt(state: CharacterFormState): PromptResult
   }
 
   // 2. Art Style Description
+  const customArtStyle = (state.artStyleCustom || '').trim();
   let styleDescKr = '';
   let styleDescEn = '';
-  switch (state.artStyle) {
-    case '치비':
-      styleDescKr = '사랑스럽고 앙증맞은 2등신 치비(SD) 캐릭터 일러스트레이션';
-      styleDescEn = 'cute chibi style, 2-head-proportions, adorable SD character illustration';
-      break;
-    case '라인아트':
-      styleDescKr = '세련되고 간결한 감성 미니멀 라인아트(Line Art) 드로잉';
-      styleDescEn = 'clean minimalist line art, elegant black line drawing, refined aesthetic';
-      break;
-    case '3D 클레이':
-      styleDescKr = '말랑말랑하고 귀여운 3D 점토(Claymation) 질감의 캐릭터 아트';
-      styleDescEn = 'cute 3D claymation style, soft plasticine clay texture, tactile smooth finish, soft depth of field';
-      break;
-    case '애니메이션':
-      styleDescKr = '청량하고 생동감 넘치는 일본 애니메이션 풍의 컬러풀 캐릭터 일러스트레이션';
-      styleDescEn = 'vibrant anime aesthetic, high quality animation still, cel-shaded art, expressive';
-      break;
-    case '픽셀아트':
-      styleDescKr = '레트로 감성의 정교한 8비트/16비트 고해상도 픽셀아트(Pixel Art)';
-      styleDescEn = 'high quality retro 16-bit pixel art, detailed pixel sprites, crisp pixel borders';
-      break;
-    case '플랫 벡터':
-      styleDescKr = '선명한 색감과 모던한 기하학적 형태의 2D 플랫 벡터(Flat Vector) 일러스트';
-      styleDescEn = 'modern flat vector illustration, clean geometric shapes, bold clean vector lines';
-      break;
-    case '수채화':
-      styleDescKr = '맑고 투명한 물감 번짐과 감성적인 붓 터치가 돋보이는 수채화(Watercolor) 아트';
-      styleDescEn = 'delicate watercolor painting, soft translucent washes, artistic paper texture, painterly brushstrokes';
-      break;
-    case '봉제인형':
-      styleDescKr = '포근하고 따뜻한 펠트 천과 꼼꼼한 자수 스티치 디테일이 살아있는 봉제인형 캐릭터';
-      styleDescEn = 'cozy felt plush toy, embroidered stitching details, cute stuffed animal doll texture, soft felt';
-      break;
-    default:
-      styleDescKr = '매력적인 디지털 캐릭터 일러스트레이션';
-      styleDescEn = 'digital character illustration';
+
+  if (customArtStyle) {
+    styleDescKr = `캐릭터를 ${customArtStyle} 그림 스타일로 표현해 주세요. 해당 스타일의 질감과 표현 특징이 자연스럽게 살아나는 캐릭터 일러스트레이션`;
+    styleDescEn = `in ${customArtStyle} art style, character illustration`;
+  } else {
+    switch (state.artStyle) {
+      case '치비':
+        styleDescKr = '사랑스럽고 앙증맞은 2등신 치비(SD) 캐릭터 일러스트레이션';
+        styleDescEn = 'cute chibi style, 2-head-proportions, adorable SD character illustration';
+        break;
+      case '라인아트':
+        styleDescKr = '세련되고 간결한 감성 미니멀 라인아트(Line Art) 드로잉';
+        styleDescEn = 'clean minimalist line art, elegant black line drawing, refined aesthetic';
+        break;
+      case '3D 애니메이션':
+        styleDescKr = '고품질 3D 애니메이션 영화풍으로, 자연스러운 피부와 머리카락 질감, 크고 생생한 눈과 풍부한 표정, 부드럽고 따뜻한 영화 조명이 어우러진 친근하고 사랑스러운 입체 캐릭터 일러스트레이션';
+        styleDescEn = 'high quality 3D animated movie style, natural skin and hair texture, large expressive eyes and rich facial expression, soft warm cinematic lighting, friendly and lovable 3D character';
+        break;
+      case '애니메이션':
+        styleDescKr = '청량하고 생동감 넘치는 일본 애니메이션 풍의 컬러풀 캐릭터 일러스트레이션';
+        styleDescEn = 'vibrant anime aesthetic, high quality animation still, cel-shaded art, expressive';
+        break;
+      case '픽셀아트':
+        styleDescKr = '레트로 감성의 정교한 8비트/16비트 고해상도 픽셀아트(Pixel Art)';
+        styleDescEn = 'high quality retro 16-bit pixel art, detailed pixel sprites, crisp pixel borders';
+        break;
+      case '플랫 벡터':
+        styleDescKr = '선명한 색감과 모던한 기하학적 형태의 2D 플랫 벡터(Flat Vector) 일러스트';
+        styleDescEn = 'modern flat vector illustration, clean geometric shapes, bold clean vector lines';
+        break;
+      case '수채화':
+        styleDescKr = '맑고 투명한 물감 번짐과 감성적인 붓 터치가 돋보이는 수채화(Watercolor) 아트';
+        styleDescEn = 'delicate watercolor painting, soft translucent washes, artistic paper texture, painterly brushstrokes';
+        break;
+      case '봉제인형':
+        styleDescKr = '포근하고 따뜻한 펠트 천과 꼼꼼한 자수 스티치 디테일이 살아있는 봉제인형 캐릭터';
+        styleDescEn = 'cozy felt plush toy, embroidered stitching details, cute stuffed animal doll texture, soft felt';
+        break;
+      default:
+        warnings.push('💡 Q9에서 그림 스타일 카드를 고르거나 원하는 스타일을 직접 입력해 보세요.');
+        styleDescKr = '매력적인 디지털 캐릭터 일러스트레이션';
+        styleDescEn = 'digital character illustration';
+    }
   }
 
   // 3. Subject (Age + Gender) - Neutral without fixed mood to prevent conflict with expression

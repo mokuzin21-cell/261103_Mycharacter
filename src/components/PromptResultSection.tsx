@@ -14,43 +14,120 @@ import {
 import { PromptResult } from '../utils/promptGenerator';
 import { CharacterFormState } from '../data/characterData';
 
+export interface CustomPromptDraftState {
+  isCustomMode: boolean;
+  customKorean: string;
+  customEnglish: string;
+  customNegative: string;
+  activeLanguageTab: 'korean' | 'english' | 'negative';
+}
+
 interface PromptResultSectionProps {
   promptResult: PromptResult;
   formState: CharacterFormState;
   onReset: () => void;
+  customState?: CustomPromptDraftState;
+  onCustomStateChange?: React.Dispatch<React.SetStateAction<CustomPromptDraftState>>;
 }
 
 export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
   promptResult,
   formState,
   onReset,
+  customState,
+  onCustomStateChange,
 }) => {
-  const [activeTab, setActiveTab] = useState<'korean' | 'english' | 'negative'>('korean');
+  const [localActiveTab, setLocalActiveTab] = useState<'korean' | 'english' | 'negative'>('korean');
   const [copied, setCopied] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
-  // Direct editing mode state
-  const [isCustomMode, setIsCustomMode] = useState(false);
-  const [customKorean, setCustomKorean] = useState('');
-  const [customEnglish, setCustomEnglish] = useState('');
-  const [customNegative, setCustomNegative] = useState('');
+  // Direct editing mode state (uses lifted state when provided so tab switches preserve edits)
+  const [localIsCustomMode, setLocalIsCustomMode] = useState(false);
+  const [localCustomKorean, setLocalCustomKorean] = useState('');
+  const [localCustomEnglish, setLocalCustomEnglish] = useState('');
+  const [localCustomNegative, setLocalCustomNegative] = useState('');
+
+  const activeTab = customState ? customState.activeLanguageTab : localActiveTab;
+  const isCustomMode = customState ? customState.isCustomMode : localIsCustomMode;
+  const customKorean = customState ? customState.customKorean : localCustomKorean;
+  const customEnglish = customState ? customState.customEnglish : localCustomEnglish;
+  const customNegative = customState ? customState.customNegative : localCustomNegative;
+
+  const setActiveTab = (tab: 'korean' | 'english' | 'negative') => {
+    if (onCustomStateChange) {
+      onCustomStateChange((prev) => ({ ...prev, activeLanguageTab: tab }));
+    } else {
+      setLocalActiveTab(tab);
+    }
+  };
+
+  const setIsCustomMode = (val: boolean) => {
+    if (onCustomStateChange) {
+      onCustomStateChange((prev) => ({ ...prev, isCustomMode: val }));
+    } else {
+      setLocalIsCustomMode(val);
+    }
+  };
+
+  const setCustomKorean = (val: string) => {
+    if (onCustomStateChange) {
+      onCustomStateChange((prev) => ({ ...prev, customKorean: val }));
+    } else {
+      setLocalCustomKorean(val);
+    }
+  };
+
+  const setCustomEnglish = (val: string) => {
+    if (onCustomStateChange) {
+      onCustomStateChange((prev) => ({ ...prev, customEnglish: val }));
+    } else {
+      setLocalCustomEnglish(val);
+    }
+  };
+
+  const setCustomNegative = (val: string) => {
+    if (onCustomStateChange) {
+      onCustomStateChange((prev) => ({ ...prev, customNegative: val }));
+    } else {
+      setLocalCustomNegative(val);
+    }
+  };
 
   // When not in custom mode, keep custom drafts in sync with auto-generated prompts
   useEffect(() => {
     if (!isCustomMode) {
-      setCustomKorean(promptResult.koreanPrompt);
-      setCustomEnglish(promptResult.englishPrompt);
-      setCustomNegative(promptResult.negativePrompt);
+      if (onCustomStateChange) {
+        onCustomStateChange((prev) => ({
+          ...prev,
+          customKorean: promptResult.koreanPrompt,
+          customEnglish: promptResult.englishPrompt,
+          customNegative: promptResult.negativePrompt,
+        }));
+      } else {
+        setLocalCustomKorean(promptResult.koreanPrompt);
+        setLocalCustomEnglish(promptResult.englishPrompt);
+        setLocalCustomNegative(promptResult.negativePrompt);
+      }
     }
-  }, [promptResult, isCustomMode]);
+  }, [promptResult, isCustomMode, onCustomStateChange]);
 
   const handleToggleCustomMode = () => {
     if (!isCustomMode) {
       // Entering custom mode: ensure drafts have latest auto prompt
-      setCustomKorean(customKorean || promptResult.koreanPrompt);
-      setCustomEnglish(customEnglish || promptResult.englishPrompt);
-      setCustomNegative(customNegative || promptResult.negativePrompt);
-      setIsCustomMode(true);
+      if (onCustomStateChange) {
+        onCustomStateChange((prev) => ({
+          ...prev,
+          customKorean: prev.customKorean || promptResult.koreanPrompt,
+          customEnglish: prev.customEnglish || promptResult.englishPrompt,
+          customNegative: prev.customNegative || promptResult.negativePrompt,
+          isCustomMode: true,
+        }));
+      } else {
+        setLocalCustomKorean(localCustomKorean || promptResult.koreanPrompt);
+        setLocalCustomEnglish(localCustomEnglish || promptResult.englishPrompt);
+        setLocalCustomNegative(localCustomNegative || promptResult.negativePrompt);
+        setLocalIsCustomMode(true);
+      }
     } else {
       // Toggle off / finish editing
       setIsCustomMode(false);
@@ -58,10 +135,20 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
   };
 
   const handleRevertToAuto = () => {
-    setCustomKorean(promptResult.koreanPrompt);
-    setCustomEnglish(promptResult.englishPrompt);
-    setCustomNegative(promptResult.negativePrompt);
-    setIsCustomMode(false);
+    if (onCustomStateChange) {
+      onCustomStateChange((prev) => ({
+        ...prev,
+        customKorean: promptResult.koreanPrompt,
+        customEnglish: promptResult.englishPrompt,
+        customNegative: promptResult.negativePrompt,
+        isCustomMode: false,
+      }));
+    } else {
+      setLocalCustomKorean(promptResult.koreanPrompt);
+      setLocalCustomEnglish(promptResult.englishPrompt);
+      setLocalCustomNegative(promptResult.negativePrompt);
+      setLocalIsCustomMode(false);
+    }
   };
 
   const currentText = isCustomMode
@@ -100,6 +187,9 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
     }
   };
 
+  const activeArtStyle =
+    (formState.artStyleCustom || '').trim() || formState.artStyle || '기본 스타일';
+
   const handleDownload = () => {
     const finalKorean = isCustomMode ? customKorean : promptResult.koreanPrompt;
     const finalEnglish = isCustomMode ? customEnglish : promptResult.englishPrompt;
@@ -113,7 +203,7 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
       `- 성별: ${formState.gender} / 연령대: ${formState.age} / 체형: ${formState.bodyType}\n` +
       `- 헤어: ${formState.hairLength} ${formState.hairStyle} (${formState.hairColor})\n` +
       `- 안경: ${formState.glasses} / 표정: ${formState.expression}\n` +
-      `- 그림 스타일: ${formState.artStyle} / 배경: ${formState.background} / 사용 목적: ${formState.purpose}\n\n` +
+      `- 그림 스타일: ${activeArtStyle} / 배경: ${formState.background} / 사용 목적: ${formState.purpose}\n\n` +
       `작성 방식: ${isCustomMode ? '사용자 직접 작성/수정' : '질문 답변 기반 자동 생성'}\n` +
       `생성일자: ${new Date().toLocaleDateString('ko-KR')}`;
 
@@ -121,7 +211,7 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `내_AI캐릭터_프롬프트_${formState.artStyle}.txt`;
+    a.download = `내_AI캐릭터_프롬프트_${activeArtStyle}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -248,7 +338,7 @@ export const PromptResultSection: React.FC<PromptResultSectionProps> = ({
       <div className="mt-5 flex flex-wrap items-center gap-2 text-xs">
         <span className="font-semibold text-slate-400">선택 요약:</span>
         <span className="px-2.5 py-1 rounded-lg bg-teal-100/70 text-teal-800 font-bold">
-          {formState.artStyle}
+          {activeArtStyle}
         </span>
         <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-medium">
           {formState.gender} · {formState.age}

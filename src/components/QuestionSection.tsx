@@ -94,6 +94,43 @@ export const QuestionSection: React.FC<QuestionSectionProps> = ({
               </div>
             </div>
           )}
+
+          {/* Direct Art Style Input below Q9 8 cards (no 9th card) */}
+          {question.id === 'artStyle' && (
+            <div
+              className={`mt-5 p-4 sm:p-5 rounded-2xl border-2 transition-all ${
+                (formState.artStyleCustom || '').trim()
+                  ? 'bg-teal-50/70 border-teal-500 shadow-sm'
+                  : 'bg-slate-50/80 border-slate-200'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <label
+                  htmlFor="custom-art-style"
+                  className="text-sm sm:text-base font-extrabold text-slate-900"
+                >
+                  다른 그림 스타일로 만들고 싶나요?
+                </label>
+                {(formState.artStyleCustom || '').trim() && (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-teal-500 text-white text-xs font-extrabold shrink-0">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                    <span>직접 입력 선택됨</span>
+                  </span>
+                )}
+              </div>
+              <input
+                id="custom-art-style"
+                type="text"
+                value={formState.artStyleCustom || ''}
+                onChange={(e) => onUpdate('artStyleCustom', e.target.value)}
+                placeholder="예: 색연필 그림, 종이 오리기, 만화책 스타일"
+                className="w-full px-4 py-3 rounded-xl border-2 border-teal-300 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-teal-200 focus:border-teal-500 text-sm sm:text-base font-bold"
+              />
+              <p className="mt-2 text-xs sm:text-sm text-slate-500 font-medium">
+                원하는 그림 스타일을 직접 입력할 수 있어요.
+              </p>
+            </div>
+          )}
         </div>
       )}
 
